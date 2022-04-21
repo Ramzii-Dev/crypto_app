@@ -1,5 +1,34 @@
 {% extends "base.html" %} 
 {% block title %}accueil{% endblock %}
 {% block content %}
-<h1>hello</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">coin</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+    </thead>
+    
+    <tbody>{% for item in data %}
+      <tr>
+        <th scope="row">{{item.name}}</th>
+        <td>{{item.quote.USD.price|round(5, 'floor') }}</td>
+        {%if item.quote.USD.percent_change_24h > 0%}
+                <td class="up">{{item.quote.USD.percent_change_24h}}</td>
+            {%else%}
+                <td class="down">{{item.quote.USD.percent_change_24h}}</td>
+        {%endif%}
+
+        {%if item.quote.USD.percent_change_1h > 0%}
+            <td class="up">{{item.quote.USD.percent_change_1h}}</td>
+            {%else%}
+            <td class="down">{{item.quote.USD.percent_change_1h}}</td>
+        {%endif%}
+      </tr>
+       {% endfor %}  
+     </tbody>
+  </table>
+
 {% endblock %}
