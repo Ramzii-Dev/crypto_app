@@ -7,6 +7,11 @@ home = Blueprint('home', __name__)
 
 @home.route('/')
 def index():
+    
+    return render_template('base.html')
+
+@home.route('/api')
+def api():
     cmc = Cmc()
     all_data = cmc.get_all()
     return render_template('home/index.html', data=all_data)
