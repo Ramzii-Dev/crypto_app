@@ -6,6 +6,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80))
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(255))
+    coins = db.relationship('Coin', backref='owner', lazy='dynamic')
 
     def __init__(self, username, email, password):
         self.username = username
