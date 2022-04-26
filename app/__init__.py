@@ -22,7 +22,7 @@ app.config.from_object('config.settings.' + os.environ.get('FLASK_ENV'))
 #======================================Database models ====================================
 from app.models.users import User
 from app.models import db
-from app.models import Coin
+
 
 
 
