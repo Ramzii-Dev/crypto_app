@@ -43,8 +43,7 @@ def register():
         flash('cette adresse email existe déjà merci d\'utliser une autre')
         return redirect(url_for('auth.register'))
     if form.validate_on_submit():
-        new_user = User(email=email, username=username,
-                        password=generate_password_hash(password, method='sha256'))
+        new_user = User(email=email, username=username,password=generate_password_hash(password, method='sha256'))
         db.session.add(new_user)
         db.session.commit()
         flash('Vous êtes bien inscrit')

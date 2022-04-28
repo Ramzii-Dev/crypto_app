@@ -53,5 +53,8 @@ def create_app():
         # Blueprint for the auth parts of the app
         from app.views.auth import auth as auth_blueprint
         app.register_blueprint(auth_blueprint)
-
+        
+        from app.views.coin import coins as coin_blueprint
+        app.register_blueprint(coin_blueprint)
+        app.config.get('SQLALCHEMY_DATABASE_URI').replace('%', '%%')
         return app

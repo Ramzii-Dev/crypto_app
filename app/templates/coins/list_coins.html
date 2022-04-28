@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{titre}}{% endblock %}
+{% block content %}
+<div class="container ">
+    {% for coin in coins %}
+        {{coin.name}}
+         {{ coin.value}}
+    {% endfor %}
+</div>
+{% endblock %}
