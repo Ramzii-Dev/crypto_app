@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<div class="container ">
+    <div class="authe">
+        <div>
+            <form action="{{ url_for('coin.edit_coin',coin_id = coin_id) }}" method="post">
+                <div class="form-group">
+                    {{form.csrf_token}}
+                </div>
+                <div class="form-group text-center">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if connect == 'no' %}
+                    <div class="alert alert-danger">{{ message }}
+                        <a href="{{url_for('auth.register')}}">aller a la page d'inscription</a>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-success">{{ message }}</div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    {{form.name}}
+                    {{form.value}}
+                    <br>
+                    {{form.submit(class='btn btn-primary',value='modifier')}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

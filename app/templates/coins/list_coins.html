@@ -2,9 +2,16 @@
 {% block title %}{{titre}}{% endblock %}
 {% block content %}
 <div class="container ">
+    <ul>
     {% for coin in coins %}
-        {{coin.name}}
-         {{ coin.value}}
+               <li><h1>
+                   {{coin.name}} : {{coin.value}} 
+                   <a href="{{url_for('coin.delete_coin',coin_id = coin.id)}}" class="btn btn-danger">suprimer</a>
+                   <a href="{{url_for('coin.edit_coin',coin_id = coin.id)}}" class="btn btn-success">modifier</a>
+                </h1>
+            </li> 
     {% endfor %}
+</ul>
+<a href="{{url_for('coin.add_coin')}}" class="btn btn-info">ajouter</a>
 </div>
 {% endblock %}

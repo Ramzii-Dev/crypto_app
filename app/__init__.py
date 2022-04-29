@@ -5,19 +5,20 @@ import config
 from dotenv import load_dotenv
 from flask_login import LoginManager
 
-
 # ==================================== intern import  ==========================================
 from app.models import db, migrate
-
-
+from app.helpers.recursive import Recursive
+from app.cmcAPI.api import Cmc 
 
 
 # Global variables
 login_manager = LoginManager()
-
-
+api = Cmc()
 def create_app():
     app = Flask(__name__)
+    # =====================Inisialise the recusive of api call evry day (3624 seconds) ========
+    rec = Recursive(3624,api.get_all())
+    
     # ===========================Load environment variables from .env file=====================
     APP_ROOT = os.path.join(os.path.dirname(__file__), '..')
     dotenv_path = os.path.join(APP_ROOT, '.env')
@@ -26,7 +27,7 @@ def create_app():
 
     # ========================Initialize the extentions (app factory===========================
     db.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app,db)
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
     # ======================================Database models ====================================
@@ -36,7 +37,6 @@ def create_app():
     with app.app_context():
         db.create_all()
         db.session.commit()
-
         # =====================================Small HTTP Errors Handling========================
         @app.errorhandler(404)
         def page_not_found(e):

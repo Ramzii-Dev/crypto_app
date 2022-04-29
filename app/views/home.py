@@ -1,31 +1,19 @@
 from flask import Blueprint, render_template
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
+from app.cmcAPI.api import Cmc
 import json
-from ..cmcAPI.api import Cmc
+import os
+import app
 home = Blueprint('home', __name__)
+
+pa = os.path.abspath('.')
+path_file = os.path.join(pa, 'app\\helpers\\coins.json')
 
 @home.route('/')
 def index():
-    
-    return render_template('base.html')
+     with open(path_file, 'r') as f:
+        data = json.load(f)
+        return render_template('home/index.html', data = data)    
 
-@home.route('/api')
-def api():
-    cmc = Cmc()
-    all_data = cmc.get_all()
-    return render_template('home/index.html', data=all_data)
-"""    session = Session()
-    session.headers.update(headers)
 
-    try:
-        response = session.get(url_covert, params=parameters)
-        data = json.loads(response.text)
-        json_string = json.dumps(data)
-        with open('data.json', 'w') as outfile:
-            outfile.write(json_string)
-        datas = data
-        print(datas)
-        return render_template('home/index.html', data=data)
-    except (ConnectionError, Timeout, TooManyRedirects) as e:
-        print(e)"""
