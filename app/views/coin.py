@@ -1,3 +1,4 @@
+from re import T
 from app.models import db
 from flask import render_template, flash, redirect, url_for, request, session, Blueprint
 from flask_login import current_user,login_required
@@ -5,6 +6,8 @@ from app.models.users import User
 from app.models.coins import Coin
 from app.forms.coins import AddForm
 import os
+from app.helpers.json_tasks import Tasks
+
 
 coins = Blueprint('coin', __name__)
 
@@ -54,3 +57,15 @@ def edit_coin(coin_id):
             flash('Vous avez modifié une monnaie')
             return redirect(url_for('coin.list_coins'))
     return render_template('coins/edit_coins.html',coin_id = coin.id, form=form,title='Modifier une monnaie')
+
+
+
+@coins.route('/coin/<int:coin_id>/detail', methods=['GET', 'POST'])
+@login_required
+def detail_coin(coin_id):
+    coin = Coin.query.get_or_404(coin_id)
+    if coin.user_id == current_user.id:
+        details = Tasks().get_by_name(coin.name)
+        return render_template('coins/detail_coins.html',coin=details,title='Détails de la monnaie')
+    else:
+        return redirect(url_for('coin.list_coins'))

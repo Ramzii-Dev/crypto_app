@@ -17,8 +17,8 @@ api = Cmc()
 def create_app():
     app = Flask(__name__)
     # =====================Inisialise the recusive of api call evry day (3624 seconds) ========
-    rec = Recursive(3624,api.get_all())
-    
+    rec = Recursive(2,api.get_all())
+    rec.start()
     # ===========================Load environment variables from .env file=====================
     APP_ROOT = os.path.join(os.path.dirname(__file__), '..')
     dotenv_path = os.path.join(APP_ROOT, '.env')

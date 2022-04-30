@@ -6,8 +6,8 @@ class Cmc:
         self.base_url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
         self.parameters = {
             'start': '1',
-            'limit': '100',
-            'convert': 'USD'
+            'limit': '10',
+            'convert': 'EUR'
         }
         self.headers = {
             'Accepts': 'application/json',
